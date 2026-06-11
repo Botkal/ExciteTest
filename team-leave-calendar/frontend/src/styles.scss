@@ -1,0 +1,122 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  background: #f9fafb;
+}
+
+.form-control, .form-select {
+  border: 1px solid #ced4da !important;
+}
+
+.form-control:focus, .form-select:focus {
+  border-color: #4f46e5 !important;
+  box-shadow: 0 0 0 0.2rem rgba(79, 70, 229, 0.2) !important;
+}
+
+
+// ── Avatar circles ────────────────────────────────────────────────
+.avatar {
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+.avatar-Alice   { background: #6366f1; }
+.avatar-Bob     { background: #0ea5e9; }
+.avatar-Charlie { background: #10b981; }
+.avatar-Diana   { background: #f59e0b; }
+.avatar-default { background: #8b5cf6; }
+
+// ── Status badge colors (extend Bootstrap .badge .rounded-pill) ───
+.status-PENDING  { background-color: #fef3c7 !important; color: #92400e !important; }
+.status-APPROVED { background-color: #d1fae5 !important; color: #065f46 !important; }
+.status-REJECTED { background-color: #fee2e2 !important; color: #991b1b !important; }
+
+// ── Nav active link ───────────────────────────────────────────────
+.navbar .nav-link.active {
+  color: #4f46e5 !important;
+  background: #eef2ff;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+// ── On-call week number chip ──────────────────────────────────────
+.oncall-week-num {
+  background: #f3f4f6;
+  border-radius: 6px;
+  padding: 0.25rem 0.5rem;
+  min-width: 44px;
+}
+
+// ── On-call row highlight ─────────────────────────────────────────
+.oncall-conflict { background-color: #fff5f5 !important; }
+.oncall-current  { background-color: #eef2ff !important; }
+
+// ── Calendar grid (no Bootstrap equivalent) ───────────────────────
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  border-top: 1px solid #e5e7eb;
+  border-left: 1px solid #e5e7eb;
+}
+
+.cal-header {
+  background: #f3f4f6;
+  padding: 0.55rem;
+  text-align: center;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border-right: 1px solid #e5e7eb;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.cal-day {
+  background: #fff;
+  min-height: 88px;
+  padding: 0.45rem;
+  border-right: 1px solid #e5e7eb;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.cal-day.other-month { background: #f9fafb; }
+.cal-day.other-month .cal-day-num { color: #9ca3af; }
+.cal-day.today .cal-day-num {
+  background: #4f46e5;
+  color: #fff;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cal-day-num {
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  color: #111827;
+}
+
+.cal-event {
+  border-radius: 4px;
+  padding: 1px 5px;
+  margin-bottom: 2px;
+  font-size: 0.72rem;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: default;
+}
+.cal-event-PENDING  { background: #fef3c7; color: #92400e; }
+.cal-event-APPROVED { background: #d1fae5; color: #065f46; }
+.cal-event-REJECTED { background: #fee2e2; color: #991b1b; }

@@ -1,0 +1,67 @@
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h1 class="h4 fw-bold mb-0">New Leave Request</h1>
+  <a routerLink="/leaves" class="btn btn-outline-secondary btn-sm">← Back</a>
+</div>
+
+<div class="card shadow-sm mx-auto" style="max-width: 520px">
+  <div class="card-body">
+    <div *ngIf="error" class="alert alert-danger" role="alert">⚠ {{ error }}</div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+
+      <div class="mb-3">
+        <label class="form-label fw-semibold">
+          Team Member <span class="text-danger">*</span>
+        </label>
+        <select formControlName="teamMemberId" class="form-select"
+                [class.is-invalid]="f['teamMemberId'].invalid && f['teamMemberId'].touched">
+          <option [ngValue]="null" disabled>Select a team member</option>
+          <option *ngFor="let m of members" [ngValue]="m.id">{{ m.name }}</option>
+        </select>
+        <div class="invalid-feedback">Please select a team member.</div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Start Date <span class="text-danger">*</span></label>
+        <div class="input-group" [class.is-invalid]="f['startDate'].invalid && f['startDate'].touched">
+          <input class="form-control" placeholder="yyyy-mm-dd" formControlName="startDate"
+                 [class.is-invalid]="f['startDate'].invalid && f['startDate'].touched"
+                 ngbDatepicker #dpStart="ngbDatepicker" [displayMonths]="2" readonly />
+          <button class="btn btn-outline-secondary" type="button" (click)="dpStart.toggle()">📅</button>
+        </div>
+        <div class="text-danger small mt-1"
+             *ngIf="f['startDate'].invalid && f['startDate'].touched">Required.</div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label fw-semibold">End Date <span class="text-danger">*</span></label>
+        <div class="input-group">
+          <input class="form-control" placeholder="yyyy-mm-dd" formControlName="endDate"
+                 [class.is-invalid]="(f['endDate'].invalid || form.errors?.['dateRange']) && f['endDate'].touched"
+                 ngbDatepicker #dpEnd="ngbDatepicker" [displayMonths]="2" readonly />
+          <button class="btn btn-outline-secondary" type="button" (click)="dpEnd.toggle()">📅</button>
+        </div>
+        <div class="text-danger small mt-1"
+             *ngIf="f['endDate'].invalid && f['endDate'].touched">Required.</div>
+        <div class="text-danger small mt-1"
+             *ngIf="form.errors?.['dateRange'] && f['endDate'].touched">Must be after start date.</div>
+      </div>
+
+      <div class="mb-4">
+        <label class="form-label fw-semibold">Reason <span class="text-danger">*</span></label>
+        <input type="text" formControlName="reason" class="form-control"
+               placeholder="e.g. Annual leave, Medical, Personal"
+               [class.is-invalid]="f['reason'].invalid && f['reason'].touched" />
+        <div class="invalid-feedback">Reason is required (min 3 characters).</div>
+      </div>
+
+      <div class="d-flex gap-2 pt-3 border-top">
+        <button type="submit" class="btn btn-primary" [disabled]="submitting">
+          {{ submitting ? 'Submitting…' : 'Submit Request' }}
+        </button>
+        <a routerLink="/leaves" class="btn btn-outline-secondary">Cancel</a>
+      </div>
+
+    </form>
+  </div>
+</div>

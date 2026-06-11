@@ -1,0 +1,53 @@
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h1 class="h4 fw-bold mb-0">On-Call Rotation</h1>
+</div>
+
+<div *ngIf="error" class="alert alert-danger">⚠ {{ error }}</div>
+
+<div *ngIf="loading" class="text-center py-5">
+  <div class="spinner-border text-secondary" role="status">
+    <span class="visually-hidden">Loading…</span>
+  </div>
+</div>
+
+<div class="card shadow-sm" *ngIf="!loading && !error">
+  <div class="card-header bg-white py-2">
+    <small class="text-muted">
+      ⚠ <strong>Conflict</strong> = on-call person has approved leave that week
+    </small>
+  </div>
+
+  <ul class="list-group list-group-flush">
+    <li *ngFor="let week of schedule"
+        [class.oncall-conflict]="week.hasConflict"
+        [class.oncall-current]="isCurrentWeek(week)"
+        class="list-group-item">
+      <div class="d-flex align-items-center gap-3 flex-wrap">
+
+        <div class="oncall-week-num text-center">
+          <div class="fw-bold small text-muted">W{{ week.weekNumber }}</div>
+          <div class="text-muted" style="font-size:.65rem">{{ week.year }}</div>
+        </div>
+
+        <div class="text-muted small" style="min-width: 155px; font-variant-numeric: tabular-nums">
+          {{ week.weekStart }} – {{ week.weekEnd }}
+        </div>
+
+        <div class="d-flex align-items-center gap-2 flex-grow-1">
+          <div [class]="'avatar avatar-' + week.onCallMember.name" style="width:28px;height:28px;font-size:.65rem">
+            {{ week.onCallMember.name[0] }}
+          </div>
+          <span class="fw-semibold">{{ week.onCallMember.name }}</span>
+          <span *ngIf="isCurrentWeek(week)" class="badge rounded-pill bg-primary ms-1" style="font-size:.72rem">
+            This week
+          </span>
+        </div>
+
+        <div class="ms-auto">
+          <span *ngIf="week.hasConflict"  class="badge rounded-pill status-REJECTED">⚠ Conflict</span>
+          <span *ngIf="!week.hasConflict" class="badge rounded-pill status-APPROVED">✓ Available</span>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>

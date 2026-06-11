@@ -1,0 +1,42 @@
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h1 class="h4 fw-bold mb-0">Calendar</h1>
+  <select class="form-select form-select-sm w-auto" [(ngModel)]="filterMemberId" (change)="onFilterChange()">
+    <option value="">All members</option>
+    <option *ngFor="let m of members" [value]="m.id">{{ m.name }}</option>
+  </select>
+</div>
+
+<div class="card shadow-sm" *ngIf="!loading; else spinner">
+  <div class="card-header bg-white d-flex align-items-center gap-3 py-2">
+    <button class="btn btn-outline-secondary btn-sm" (click)="prev()">← Prev</button>
+    <h2 class="h6 fw-bold mb-0 flex-grow-1 text-center">{{ title }}</h2>
+    <button class="btn btn-outline-secondary btn-sm" (click)="next()">Next →</button>
+  </div>
+
+  <div class="overflow-auto">
+    <div class="calendar-grid" style="min-width: 560px">
+      <div class="cal-header" *ngFor="let d of dayNames">{{ d }}</div>
+      <ng-container *ngFor="let week of weeks">
+        <div *ngFor="let day of week"
+             [class.other-month]="!day.currentMonth"
+             [class.today]="day.isToday"
+             class="cal-day">
+          <div class="cal-day-num">{{ day.date.getDate() }}</div>
+          <div *ngFor="let ev of day.events"
+               [class]="'cal-event cal-event-' + ev.status"
+               [title]="ev.teamMember.name + ': ' + ev.reason + ' (' + ev.status + ')'">
+            {{ ev.teamMember.name }}
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+<ng-template #spinner>
+  <div class="text-center py-5">
+    <div class="spinner-border text-secondary" role="status">
+      <span class="visually-hidden">Loading…</span>
+    </div>
+  </div>
+</ng-template>
